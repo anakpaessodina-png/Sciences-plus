@@ -1,0 +1,397 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Science Plus - Portail Académique 1ère Année Médecine & Sciences</title>
+    <style>
+        :root {
+            --bg-dark: #070b14;
+            --bg-card: #0f172a;
+            --accent-cyan: #00f2fe;
+            --accent-blue: #38bdf8;
+            --text-main: #f8fafc;
+            --text-muted: #94a3b8;
+            --border-glow: rgba(0, 242, 254, 0.2);
+            --danger-glow: rgba(239, 68, 68, 0.2);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+        }
+
+        body {
+            background-color: var(--bg-dark);
+            color: var(--text-main);
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        @media print {
+            body { display: none !important; }
+        }
+
+        /* En-tête */
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 5%;
+            background: rgba(7, 11, 20, 0.85);
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .logo {
+            font-size: 24px;
+            font-weight: 800;
+            background: linear-gradient(135deg, var(--accent-blue), var(--accent-cyan));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .logo span {
+            font-size: 14px;
+            padding: 2px 6px;
+            border: 1px solid var(--accent-cyan);
+            border-radius: 4px;
+            color: var(--accent-cyan);
+        }
+
+        /* Grille de produits */
+        .main-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 40px 5%;
+        }
+
+        .products-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 25px;
+            margin-top: 30px;
+        }
+
+        .product-card {
+            background: var(--bg-card);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            border-radius: 14px;
+            padding: 24px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .product-title {
+            font-size: 19px;
+            font-weight: 700;
+            margin: 10px 0;
+        }
+
+        .product-price {
+            font-size: 20px;
+            font-weight: 800;
+            color: var(--accent-cyan);
+            margin: 15px 0;
+        }
+
+        .btn-buy {
+            background: linear-gradient(135deg, var(--accent-blue), var(--accent-cyan));
+            color: var(--bg-dark);
+            border: none;
+            padding: 10px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: bold;
+            width: 100%;
+        }
+
+        /* Fenêtre Publicitaire (Pop-up) */
+        .pub-overlay {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0, 0, 0, 0.85);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 2000;
+        }
+
+        .pub-box {
+            background: var(--bg-card);
+            border: 2px solid var(--accent-cyan);
+            padding: 30px;
+            border-radius: 16px;
+            text-align: center;
+            max-width: 450px;
+            width: 90%;
+            box-shadow: 0 0 30px var(--border-glow);
+        }
+
+        .pub-timer {
+            color: var(--text-muted);
+            font-size: 14px;
+            margin-top: 15px;
+        }
+
+        .btn-close-pub {
+            background: transparent;
+            border: 1px solid var(--text-muted);
+            color: var(--text-muted);
+            padding: 8px 20px;
+            border-radius: 6px;
+            cursor: not-allowed;
+            margin-top: 15px;
+            font-weight: bold;
+        }
+
+        .btn-close-pub.active {
+            background: var(--accent-cyan);
+            color: var(--bg-dark);
+            border: none;
+            cursor: pointer;
+        }
+
+        /* Fenêtre de Paiement (Modal) */
+        .payment-overlay {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 1500;
+        }
+
+        .payment-box {
+            background: #111827;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            padding: 25px;
+            border-radius: 12px;
+            max-width: 400px;
+            width: 90%;
+            text-align: center;
+        }
+
+        .payment-option {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            padding: 12px;
+            margin: 10px 0;
+            border-radius: 6px;
+            cursor: pointer;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 10px;
+            font-weight: bold;
+        }
+
+        .payment-option:hover {
+            border-color: var(--accent-cyan);
+        }
+
+        .instructions {
+            display: none;
+            background: rgba(0, 242, 254, 0.05);
+            padding: 15px;
+            border-radius: 6px;
+            margin-top: 15px;
+            font-size: 14px;
+            border: 1px dashed var(--accent-cyan);
+        }
+
+        .btn-whatsapp {
+            background: #25D366;
+            color: white;
+            padding: 10px;
+            border-radius: 6px;
+            display: inline-block;
+            text-decoration: none;
+            margin-top: 10px;
+            font-weight: bold;
+            width: 100%;
+        }
+
+        .btn-cancel {
+            background: transparent;
+            color: var(--text-muted);
+            border: none;
+            margin-top: 15px;
+            cursor: pointer;
+            font-size: 13px;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="pub-overlay" id="pubOverlay">
+        <div class="pub-box">
+            <h2 style="color: var(--accent-cyan); margin-bottom: 10px;">ANONCE SPONSORISÉE</h2>
+            <p>Rejoignez la communauté WhatsApp **Science Plus** pour ne rater aucun cours et aucune correction d'examen !</p>
+            <div class="pub-timer" id="pubTimer">Veuillez patienter 5 secondes...</div>
+            <button class="btn-close-pub" id="btnClosePub" disabled onclick="fermerPub()">Accéder au site</button>
+        </div>
+    </div>
+
+    <header>
+        <div class="logo">🧬 Science <span>Plus</span></div>
+        <div style="font-size: 13px; color: var(--accent-cyan);">Propriétaire : Annason Dina</div>
+    </header>
+
+    <div class="main-container">
+        <h2 style="text-align: center; margin-bottom: 10px;">Portail d'Études de Première Année</h2>
+        <p style="text-align: center; color: var(--text-muted); margin-bottom: 30px;">Sélectionnez vos matières clés pour valider votre année.</p>
+
+        <div class="products-grid">
+            <div class="product-card">
+                <div>
+                    <div style="font-size: 30px;">🫁</div>
+                    <div class="product-title">Anatomie Humaine</div>
+                    <p style="font-size: 13px; color: var(--text-muted);">Résumés, schémas complets et questions d'examen types.</p>
+                </div>
+                <div>
+                    <div class="product-price">4 000 F CFA</div>
+                    <button class="btn-buy" onclick="ouvrirPaiement('Anatomie Humaine', '4 000 F CFA')">Acheter / S'abonner</button>
+                </div>
+            </div>
+
+            <div class="product-card">
+                <div>
+                    <div style="font-size: 30px;">🧪</div>
+                    <div class="product-title">Biochimie Métabolique</div>
+                    <p style="font-size: 13px; color: var(--text-muted);">Cycles de Krebs et Glycolyse détaillés étape par étape.</p>
+                </div>
+                <div>
+                    <div class="product-price">4 500 F CFA</div>
+                    <button class="btn-buy" onclick="ouvrirPaiement('Biochimie Métabolique', '4 500 F CFA')">Acheter / S'abonner</button>
+                </div>
+            </div>
+
+            <div class="product-card">
+                <div>
+                    <div style="font-size: 30px;">🧲</div>
+                    <div class="product-title">Biophysique Générale</div>
+                    <p style="font-size: 13px; color: var(--text-muted);">Rayonnements, solutions aqueuses et exercices résolus.</p>
+                </div>
+                <div>
+                    <div class="product-price">4 000 F CFA</div>
+                    <button class="btn-buy" onclick="ouvrirPaiement('Biophysique', '4 000 F CFA')">Acheter / S'abonner</button>
+                </div>
+            </div>
+
+            <div class="product-card">
+                <div>
+                    <div style="font-size: 30px;">🌿</div>
+                    <div class="product-title">Botanique Médicale</div>
+                    <p style="font-size: 13px; color: var(--text-muted);">Classification des plantes médicinales et QCM d'entraînement.</p>
+                </div>
+                <div>
+                    <div class="product-price">3 000 F CFA</div>
+                    <button class="btn-buy" onclick="ouvrirPaiement('Botanique', '3 000 F CFA')">Acheter / S'abonner</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="payment-overlay" id="paymentOverlay">
+        <div class="payment-box">
+            <h3 id="payTitle" style="margin-bottom: 5px;">Matière</h3>
+            <div id="payPrice" style="color: var(--accent-cyan); font-weight: bold; margin-bottom: 20px;">0 F</div>
+
+            <div class="payment-option" onclick="choisirMode('paypal')">💳 PayPal (Euro / Dollar)</div>
+            <div class="payment-option" onclick="choisirMode('mobile')">📱 TMoney / Orange Money (Afrique)</div>
+
+            <div class="instructions" id="infoMobile">
+                <p style="margin-bottom: 10px;">Veuillez effectuer le transfert au numéro de l'administration.</p>
+                <p>Après le transfert, cliquez ci-dessous pour envoyer votre reçu sur WhatsApp afin de recevoir vos accès instantanément :</p>
+                <a href="#" id="waLink" class="btn-whatsapp" target="_blank">📲 Envoyer mon reçu sur WhatsApp</a>
+            </div>
+
+            <div class="instructions" id="infoPaypal">
+                <p>Paiement sécurisé par PayPal disponible.</p>
+                <p style="margin-top: 10px; color: var(--accent-cyan);">[Le module PayPal s'ouvrira après liaison de votre carte]</p>
+            </div>
+
+            <button class="btn-cancel" onclick="fermerPaiement()">Annuler et fermer</button>
+        </div>
+    </div>
+
+    <footer>
+        <p>&copy; 2026 Science Plus - Plateforme académique sécurisée. Tous droits réservés.</p>
+    </footer>
+
+    <script>
+        // Gestion du compte à rebours de la publicité
+        let tempsRestant = 5;
+        const timerElement = document.getElementById('pubTimer');
+        const boutonFermer = document.getElementById('btnClosePub');
+
+        const compteARebours = setInterval(() => {
+            tempsRestant--;
+            if (tempsRestant > 0) {
+                timerElement.innerText = "Veuillez patienter " + tempsRestant + " secondes...";
+            } else {
+                clearInterval(compteARebours);
+                timerElement.innerText = "Publicité visionnée !";
+                boutonFermer.disabled = false;
+                boutonFermer.classList.add('active');
+                boutonFermer.style.cursor = "pointer";
+            }
+        }, 1000);
+
+        function fermerPub() {
+            document.getElementById('pubOverlay').style.display = 'none';
+        }
+
+        // Gestion de la fenêtre de paiement
+        let matiereSelectionnee = "";
+        let prixSelectionne = "";
+
+        function ouvrirPaiement(nom, prix) {
+            matiereSelectionnee = nom;
+            prixSelectionne = prix;
+            document.getElementById('payTitle').innerText = "Achat : " + nom;
+            document.getElementById('payPrice').innerText = prix;
+            document.getElementById('paymentOverlay').style.display = 'flex';
+            document.getElementById('infoMobile').style.display = 'none';
+            document.getElementById('infoPaypal').style.display = 'none';
+        }
+
+        function fermerPaiement() {
+            document.getElementById('paymentOverlay').style.display = 'none';
+        }
+
+        function choisirMode(mode) {
+            document.getElementById('infoMobile').style.display = 'none';
+            document.getElementById('infoPaypal').style.display = 'none';
+
+            if(mode === 'mobile') {
+                document.getElementById('infoMobile').style.display = 'block';
+                // Configuration du lien WhatsApp automatique
+                let message = encodeURIComponent("Bonjour Science Plus, je souhaite valider mon accès pour la matière : " + matiereSelectionnee + " (" + prixSelectionne + "). Voici mon reçu de transfert Mobile Money :");
+                document.getElementById('waLink').href = "https://wa.me/22890000000?text=" + message; // Remplacer 22890000000 par ton vrai numéro plus tard
+            } else if(mode === 'paypal') {
+                document.getElementById('infoPaypal').style.display = 'block';
+            }
+        }
+
+        // Sécurités de base contre la copie
+        document.addEventListener('contextmenu', e => e.preventDefault());
+        document.addEventListener('keydown', e => {
+            if (e.ctrlKey && (e.key === 'c' || e.key === 's')) e.preventDefault();
+        });
+    </script>
+</body>
+      </html>
+  
