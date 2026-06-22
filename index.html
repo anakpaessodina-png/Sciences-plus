@@ -1,4 +1,4 @@
-   <!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
@@ -18,7 +18,7 @@
             box-sizing: border-box;
             margin: 0;
             padding: 0;
-            font-family: 'Segoe UI', system-ui, sans-serif;
+            font-family: system-ui, -apple-system, sans-serif;
         }
 
         body {
@@ -26,7 +26,7 @@
             color: var(--text-main);
         }
 
-        /* ÉCRAN DE VERROUILLAGE SIMPLE */
+        /* PORTAIL DE SÉCURITÉ */
         .login-overlay {
             position: fixed;
             top: 0; left: 0; width: 100%; height: 100%;
@@ -40,43 +40,45 @@
 
         .login-box {
             background: var(--bg-card);
-            padding: 30px;
+            padding: 25px;
             border-radius: 16px;
             width: 100%;
-            max-width: 450px;
+            max-width: 420px;
             box-shadow: 0 10px 25px rgba(0,0,0,0.3);
             text-align: center;
+            position: relative;
         }
 
         .login-box h2 {
             color: var(--primary);
-            margin-bottom: 8px;
+            margin-bottom: 6px;
+            font-size: 24px;
         }
 
         .login-box p {
             color: var(--text-muted);
-            font-size: 14px;
-            margin-bottom: 24px;
+            font-size: 13px;
+            margin-bottom: 20px;
         }
 
         .form-group {
-            margin-bottom: 16px;
+            margin-bottom: 14px;
             text-align: left;
         }
 
         .form-group label {
             display: block;
-            margin-bottom: 6px;
-            font-size: 14px;
+            margin-bottom: 5px;
+            font-size: 13px;
             font-weight: 600;
         }
 
         .form-group input, .form-group select {
             width: 100%;
-            padding: 12px;
+            padding: 11px;
             border: 1px solid #cbd5e1;
             border-radius: 8px;
-            font-size: 15px;
+            font-size: 14px;
             background: #f1f5f9;
             color: #000000;
         }
@@ -86,12 +88,12 @@
             background: var(--primary);
             color: white;
             border: none;
-            padding: 14px;
+            padding: 12px;
             border-radius: 8px;
-            font-size: 16px;
+            font-size: 15px;
             font-weight: bold;
             cursor: pointer;
-            margin-top: 10px;
+            margin-top: 5px;
         }
 
         .btn-bypass {
@@ -104,14 +106,14 @@
             font-size: 14px;
             font-weight: bold;
             cursor: pointer;
-            margin-top: 12px;
+            margin-top: 10px;
         }
 
         /* SITE PRINCIPAL */
         header {
             background: var(--primary);
             color: white;
-            padding: 20px 5%;
+            padding: 15px 5%;
             display: flex;
             justify-content: space-between;
             align-items: center;
@@ -119,30 +121,30 @@
             top: 0; z-index: 100;
         }
 
-        .logo { font-size: 22px; font-weight: 800; }
-        .user-badge { font-size: 14px; background: rgba(255,255,255,0.2); padding: 6px 12px; border-radius: 20px; }
+        .logo { font-size: 20px; font-weight: 800; }
+        .user-badge { font-size: 13px; background: rgba(255,255,255,0.2); padding: 5px 10px; border-radius: 20px; }
 
-        .container { max-width: 1200px; margin: 0 auto; padding: 30px 5%; }
+        .container { max-width: 1200px; margin: 0 auto; padding: 20px 5%; }
         
         .semester-title {
-            margin: 40px 0 20px;
-            padding-bottom: 8px;
+            margin: 30px 0 15px;
+            padding-bottom: 6px;
             border-bottom: 3px solid var(--primary);
             color: var(--primary-dark);
-            font-size: 22px;
+            font-size: 20px;
         }
 
         .grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-            gap: 25px;
+            grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+            gap: 20px;
         }
 
         .card {
             background: var(--bg-card);
             border-radius: 12px;
             overflow: hidden;
-            box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05);
+            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
             border: 1px solid #e2e8f0;
             display: flex;
             flex-direction: column;
@@ -151,14 +153,14 @@
 
         .card-img {
             width: 100%;
-            height: 150px;
+            height: 140px;
             object-fit: cover;
         }
 
-        .card-body { padding: 20px; }
-        .card-title { font-size: 18px; font-weight: 700; margin-bottom: 8px; }
-        .card-desc { font-size: 13px; color: var(--text-muted); margin-bottom: 15px; min-height: 36px; }
-        .card-price { font-size: 18px; font-weight: 800; color: var(--primary); margin-bottom: 15px; }
+        .card-body { padding: 15px; }
+        .card-title { font-size: 17px; font-weight: 700; margin-bottom: 6px; }
+        .card-desc { font-size: 12px; color: var(--text-muted); margin-bottom: 12px; min-height: 34px; }
+        .card-price { font-size: 16px; font-weight: 800; color: var(--primary); margin-bottom: 12px; }
 
         .btn-action {
             width: 100%;
@@ -172,18 +174,18 @@
             display: block;
         }
 
-        .btn-buy { background: #0284c7; color: white; }
-        .btn-admin-edit { background: #e2e8f0; color: #334155; margin-top: 8px; font-size: 12px; display: none; }
+        .btn-buy { background: #0284c7; color: white; font-size: 14px; }
+        .btn-admin-edit { background: #e2e8f0; color: #334155; margin-top: 8px; font-size: 11px; display: none; }
 
-        footer { text-align: center; padding: 40px; margin-top: 6px; background: #e2e8f0; }
-        .btn-admin-trigger { background: transparent; border: none; color: var(--text-muted); cursor: pointer; font-size: 13px; }
+        footer { text-align: center; padding: 30px; margin-top: 20px; background: #e2e8f0; }
+        .btn-admin-trigger { background: transparent; border: none; color: var(--text-muted); cursor: pointer; font-size: 12px; }
 
         .admin-panel {
             position: fixed;
             bottom: 0; left: 0; width: 100%;
             background: white;
             box-shadow: 0 -10px 25px rgba(0,0,0,0.2);
-            padding: 20px;
+            padding: 15px;
             display: none;
             z-index: 5000;
         }
@@ -222,9 +224,8 @@
                 <input type="text" id="studentOtherUniv" placeholder="Saisissez votre établissement">
             </div>
 
-            <button class="btn-login" onclick="validerEtFermer()">Accéder au portail d'études</button>
-            
-            <button class="btn-bypass" onclick="ouvrirDirectement()">⚡ Entrée Rapide Invité</button>
+            <button class="btn-login" id="mainBoutonAcceder">Accéder au portail d'études</button>
+            <button class="btn-bypass" id="mainBoutonInvite">⚡ Entrée Rapide Invité</button>
         </div>
     </div>
 
@@ -394,4 +395,4 @@
                 <img class="card-img" src="https://images.unsplash.com/photo-1579154204601-01588f351e67?auto=format&fit=crop&w=400&q=80" alt="Parasito">
                 <div class="card-body">
                     <div class="card-title">Parasitologie - Entomologie</div>
-                    <div class="card-desc">Cycles des parasites tropicaux, vecteurs et diagnostics biologiques.</d                 
+                    <div class="card-desc">Cycles des parasites tropicaux
