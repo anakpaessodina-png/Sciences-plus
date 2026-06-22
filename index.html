@@ -3,395 +3,389 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Science Plus - Portail Académique 1ère Année Médecine & Sciences</title>
+    <title>Science Plus - Portail Universitaire Privé</title>
     <style>
         :root {
-            --bg-dark: #070b14;
-            --bg-card: #0f172a;
-            --accent-cyan: #00f2fe;
-            --accent-blue: #38bdf8;
-            --text-main: #f8fafc;
-            --text-muted: #94a3b8;
-            --border-glow: rgba(0, 242, 254, 0.2);
-            --danger-glow: rgba(239, 68, 68, 0.2);
+            --primary: #0284c7;
+            --primary-dark: #0369a1;
+            --bg-body: #f8fafc;
+            --bg-card: #ffffff;
+            --text-main: #0f172a;
+            --text-muted: #64748b;
+            --accent: #0ea5e9;
         }
 
         * {
             box-sizing: border-box;
             margin: 0;
             padding: 0;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            -webkit-user-select: none;
-            -moz-user-select: none;
-            -ms-user-select: none;
-            user-select: none;
+            font-family: 'Segoe UI', system-ui, sans-serif;
         }
 
         body {
-            background-color: var(--bg-dark);
+            background-color: var(--bg-body);
             color: var(--text-main);
-            overflow-x: hidden;
-            position: relative;
         }
 
-        @media print {
-            body { display: none !important; }
+        /* SAS D'ENTRÉE / CONNEXION ÉTUDIANT */
+        .login-overlay {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: #0f172a;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+            padding: 20px;
         }
 
-        /* En-tête */
+        .login-box {
+            background: var(--bg-card);
+            padding: 30px;
+            border-radius: 16px;
+            width: 100%;
+            max-width: 450px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.3);
+        }
+
+        .login-box h2 {
+            color: var(--primary);
+            margin-bottom: 8px;
+            text-align: center;
+        }
+
+        .login-box p {
+            color: var(--text-muted);
+            font-size: 14px;
+            text-align: center;
+            margin-bottom: 24px;
+        }
+
+        .form-group {
+            margin-bottom: 16px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 6px;
+            font-size: 14px;
+            font-weight: 600;
+        }
+
+        .form-group input, .form-group select {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #cbd5e1;
+            border-radius: 8px;
+            font-size: 15px;
+            background: #f1f5f9;
+        }
+
+        .btn-login {
+            width: 100%;
+            background: var(--primary);
+            color: white;
+            border: none;
+            padding: 14px;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            margin-top: 10px;
+        }
+
+        /* SITE PRINCIPAL */
         header {
+            background: var(--primary);
+            color: white;
+            padding: 20px 5%;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 20px 5%;
-            background: rgba(7, 11, 20, 0.85);
-            backdrop-filter: blur(12px);
-            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
             position: sticky;
-            top: 0;
-            z-index: 100;
+            top: 0; z-index: 100;
+            box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1);
         }
 
-        .logo {
-            font-size: 24px;
-            font-weight: 800;
-            background: linear-gradient(135deg, var(--accent-blue), var(--accent-cyan));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
+        .logo { font-size: 22px; font-weight: 800; }
+        .user-badge { font-size: 14px; background: rgba(255,255,255,0.2); padding: 6px 12px; border-radius: 20px; }
+
+        .container { max-width: 1200px; margin: 0 auto; padding: 30px 5%; }
+        
+        .semester-title {
+            margin: 40px 0 20px;
+            padding-bottom: 8px;
+            border-bottom: 3px solid var(--primary);
+            color: var(--primary-dark);
+            font-size: 22px;
         }
 
-        .logo span {
-            font-size: 14px;
-            padding: 2px 6px;
-            border: 1px solid var(--accent-cyan);
-            border-radius: 4px;
-            color: var(--accent-cyan);
-        }
-
-        /* Grille de produits */
-        .main-container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 40px 5%;
-        }
-
-        .products-grid {
+        .grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
             gap: 25px;
-            margin-top: 30px;
         }
 
-        .product-card {
+        /* CARTES AVEC VISUELS */
+        .card {
             background: var(--bg-card);
-            border: 1px solid rgba(255, 255, 255, 0.05);
-            border-radius: 14px;
-            padding: 24px;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05);
+            border: 1px solid #e2e8f0;
             display: flex;
             flex-direction: column;
             justify-content: space-between;
+            position: relative;
         }
 
-        .product-title {
-            font-size: 19px;
-            font-weight: 700;
-            margin: 10px 0;
-        }
-
-        .product-price {
-            font-size: 20px;
-            font-weight: 800;
-            color: var(--accent-cyan);
-            margin: 15px 0;
-        }
-
-        .btn-buy {
-            background: linear-gradient(135deg, var(--accent-blue), var(--accent-cyan));
-            color: var(--bg-dark);
-            border: none;
-            padding: 10px;
-            border-radius: 6px;
-            cursor: pointer;
-            font-weight: bold;
+        .card-img {
             width: 100%;
+            height: 150px;
+            object-fit: cover;
+            background: #e2e8f0;
         }
 
-        /* Fenêtre Publicitaire (Pop-up) */
-        .pub-overlay {
-            position: fixed;
-            top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(0, 0, 0, 0.85);
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            z-index: 2000;
-        }
+        .card-body { padding: 20px; }
+        .card-title { font-size: 18px; font-weight: 700; margin-bottom: 8px; color: var(--text-main); }
+        .card-desc { font-size: 13px; color: var(--text-muted); margin-bottom: 15px; min-height: 36px; }
+        .card-price { font-size: 18px; font-weight: 800; color: var(--primary); margin-bottom: 15px; }
 
-        .pub-box {
-            background: var(--bg-card);
-            border: 2px solid var(--accent-cyan);
-            padding: 30px;
-            border-radius: 16px;
-            text-align: center;
-            max-width: 450px;
-            width: 90%;
-            box-shadow: 0 0 30px var(--border-glow);
-        }
-
-        .pub-timer {
-            color: var(--text-muted);
-            font-size: 14px;
-            margin-top: 15px;
-        }
-
-        .btn-close-pub {
-            background: transparent;
-            border: 1px solid var(--text-muted);
-            color: var(--text-muted);
-            padding: 8px 20px;
-            border-radius: 6px;
-            cursor: not-allowed;
-            margin-top: 15px;
-            font-weight: bold;
-        }
-
-        .btn-close-pub.active {
-            background: var(--accent-cyan);
-            color: var(--bg-dark);
-            border: none;
-            cursor: pointer;
-        }
-
-        /* Fenêtre de Paiement (Modal) */
-        .payment-overlay {
-            position: fixed;
-            top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(0, 0, 0, 0.8);
-            display: none;
-            justify-content: center;
-            align-items: center;
-            z-index: 1500;
-        }
-
-        .payment-box {
-            background: #111827;
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            padding: 25px;
-            border-radius: 12px;
-            max-width: 400px;
-            width: 90%;
-            text-align: center;
-        }
-
-        .payment-option {
-            background: rgba(255, 255, 255, 0.05);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            padding: 12px;
-            margin: 10px 0;
-            border-radius: 6px;
-            cursor: pointer;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            gap: 10px;
-            font-weight: bold;
-        }
-
-        .payment-option:hover {
-            border-color: var(--accent-cyan);
-        }
-
-        .instructions {
-            display: none;
-            background: rgba(0, 242, 254, 0.05);
-            padding: 15px;
-            border-radius: 6px;
-            margin-top: 15px;
-            font-size: 14px;
-            border: 1px dashed var(--accent-cyan);
-        }
-
-        .btn-whatsapp {
-            background: #25D366;
-            color: white;
+        .btn-action {
+            width: 100%;
             padding: 10px;
             border-radius: 6px;
-            display: inline-block;
+            border: none;
+            font-weight: bold;
+            cursor: pointer;
+            text-align: center;
             text-decoration: none;
-            margin-top: 10px;
-            font-weight: bold;
-            width: 100%;
+            display: block;
         }
 
-        .btn-cancel {
-            background: transparent;
-            color: var(--text-muted);
-            border: none;
-            margin-top: 15px;
-            cursor: pointer;
-            font-size: 13px;
+        .btn-buy { background: #0284c7; color: white; }
+        .btn-admin-edit { background: #e2e8f0; color: #334155; margin-top: 8px; font-size: 12px; display: none; }
+
+        /* ESPACE ADMIN */
+        footer { text-align: center; padding: 40px; margin-top: 6px; background: #e2e8f0; }
+        .btn-admin-trigger { background: transparent; border: none; color: var(--text-muted); cursor: pointer; font-size: 13px; }
+
+        .admin-panel {
+            position: fixed;
+            bottom: 0; left: 0; width: 100%;
+            background: white;
+            box-shadow: 0 -10px 25px rgba(0,0,0,0.2);
+            padding: 20px;
+            display: none;
+            z-index: 5000;
         }
     </style>
 </head>
 <body>
 
-    <div class="pub-overlay" id="pubOverlay">
-        <div class="pub-box">
-            <h2 style="color: var(--accent-cyan); margin-bottom: 10px;">ANONCE SPONSORISÉE</h2>
-            <p>Rejoignez la communauté WhatsApp **Science Plus** pour ne rater aucun cours et aucune correction d'examen !</p>
-            <div class="pub-timer" id="pubTimer">Veuillez patienter 5 secondes...</div>
-            <button class="btn-close-pub" id="btnClosePub" disabled onclick="fermerPub()">Accéder au site</button>
+    <div class="login-overlay" id="loginOverlay">
+        <div class="login-box">
+            <h2>🧬 Science Plus</h2>
+            <p>Portail d'études supérieures en Médecine & Sciences</p>
+            
+            <div class="form-group">
+                <label>Votre Prénom *</label>
+                <input type="text" id="studentPre" placeholder="Ex: Jean">
+            </div>
+            <div class="form-group">
+                <label>Votre Nom (Facultatif)</label>
+                <input type="text" id="studentNom" placeholder="Ex: Kodjo">
+            </div>
+            <div class="form-group">
+                <label>Votre Université *</label>
+                <select id="studentUniv" onchange="checkOtherUniv()">
+                    <option value="">-- Sélectionnez votre Université --</option>
+                    <optgroup label="Togo">
+                        <option value="Université de Lomé (Togo)">Université de Lomé</option>
+                        <option value="Université de Kara (Togo)">Université de Kara</option>
+                    </optgroup>
+                    <optgroup label="Bénin">
+                        <option value="Université d'Abomey-Calavi (Bénin)">Université d'Abomey-Calavi</option>
+                        <option value="Université de Parakou (Bénin)">Université de Parakou</option>
+                    </optgroup>
+                    <optgroup label="Burkina Faso">
+                        <option value="Université Joseph Ki-Zerbo (Burkina)">Université Joseph Ki-Zerbo</option>
+                    </optgroup>
+                    <optgroup label="Sénégal">
+                        <option value="Université Cheikh Anta Diop (Sénégal)">Université Cheikh Anta Diop (UCAD)</option>
+                    </optgroup>
+                    <optgroup label="Niger">
+                        <option value="Université Abdou Moumouni (Niger)">Université Abdou Moumouni</option>
+                    </optgroup>
+                    <optgroup label="France">
+                        <option value="Université de Paris (France)">Université en France</option>
+                    </optgroup>
+                    <option value="Autre">Autre (Saisir manuellement)</option>
+                </select>
+            </div>
+            <div class="form-group" id="otherUnivGroup" style="display: none;">
+                <label>Nom de votre Université</label>
+                <input type="text" id="studentOtherUniv" placeholder="Entrez le nom de l'établissement">
+            </div>
+
+            <button class="btn-login" onclick="validerAcces()">Accéder au portail d'études</button>
         </div>
     </div>
 
     <header>
-        <div class="logo">🧬 Science <span>Plus</span></div>
-        <div style="font-size: 13px; color: var(--accent-cyan);">Propriétaire : Annason Dina</div>
+        <div class="logo">🧬 Science Plus</div>
+        <div class="user-badge" id="userBadge">Étudiant</div>
     </header>
 
-    <div class="main-container">
-        <h2 style="text-align: center; margin-bottom: 10px;">Portail d'Études de Première Année</h2>
-        <p style="text-align: center; color: var(--text-muted); margin-bottom: 30px;">Sélectionnez vos matières clés pour valider votre année.</p>
-
-        <div class="products-grid">
-            <div class="product-card">
-                <div>
-                    <div style="font-size: 30px;">🫁</div>
-                    <div class="product-title">Anatomie Humaine</div>
-                    <p style="font-size: 13px; color: var(--text-muted);">Résumés, schémas complets et questions d'examen types.</p>
-                </div>
-                <div>
-                    <div class="product-price">4 000 F CFA</div>
-                    <button class="btn-buy" onclick="ouvrirPaiement('Anatomie Humaine', '4 000 F CFA')">Acheter / S'abonner</button>
+    <div class="container">
+        <h2 class="semester-title">🍂 Semestre Harmattan</h2>
+        <div class="grid" id="gridHarmattan">
+            <div class="card" id="ue-biocell">
+                <img class="card-img" src="https://images.unsplash.com/photo-1532187863486-abf9d39d6618?auto=format&fit=crop&w=400&q=80" alt="Biologie Cellulaire">
+                <div class="card-body">
+                    <div class="card-title">Biologie Cellulaire</div>
+                    <div class="card-desc">Structure, organelles et fonctionnement intime de la cellule humaine.</div>
+                    <div class="card-price" id="price-biocell">4 000 F CFA</div>
+                    <button class="btn-action btn-buy" onclick="acheter('Biologie Cellulaire', '4 000 F CFA')">Acheter l'accès</button>
+                    <button class="btn-action btn-admin-edit" onclick="editerUe('ue-biocell')">⚙️ Gérer l'UE (Admin)</button>
                 </div>
             </div>
-
-            <div class="product-card">
-                <div>
-                    <div style="font-size: 30px;">🧪</div>
-                    <div class="product-title">Biochimie Métabolique</div>
-                    <p style="font-size: 13px; color: var(--text-muted);">Cycles de Krebs et Glycolyse détaillés étape par étape.</p>
-                </div>
-                <div>
-                    <div class="product-price">4 500 F CFA</div>
-                    <button class="btn-buy" onclick="ouvrirPaiement('Biochimie Métabolique', '4 500 F CFA')">Acheter / S'abonner</button>
+            <div class="card" id="ue-biophys">
+                <img class="card-img" src="https://images.unsplash.com/photo-1614064641938-3bbee52942c7?auto=format&fit=crop&w=400&q=80" alt="Biophysique">
+                <div class="card-body">
+                    <div class="card-title">Biophysique</div>
+                    <div class="card-desc">Rayonnements, solutions aqueuses et applications médicales directes.</div>
+                    <div class="card-price">4 000 F CFA</div>
+                    <button class="btn-action btn-buy" onclick="acheter('Biophysique', '4 000 F CFA')">Acheter l'accès</button>
+                    <button class="btn-action btn-admin-edit" onclick="editerUe('ue-biophys')">⚙️ Gérer l'UE (Admin)</button>
                 </div>
             </div>
-
-            <div class="product-card">
-                <div>
-                    <div style="font-size: 30px;">🧲</div>
-                    <div class="product-title">Biophysique Générale</div>
-                    <p style="font-size: 13px; color: var(--text-muted);">Rayonnements, solutions aqueuses et exercices résolus.</p>
-                </div>
-                <div>
-                    <div class="product-price">4 000 F CFA</div>
-                    <button class="btn-buy" onclick="ouvrirPaiement('Biophysique', '4 000 F CFA')">Acheter / S'abonner</button>
+            <div class="card" id="ue-chimiorg">
+                <img class="card-img" src="https://images.unsplash.com/photo-1603126857599-f6e157fa2fe6?auto=format&fit=crop&w=400&q=80" alt="Chimie Organique">
+                <div class="card-body">
+                    <div class="card-title">Chimie Organique</div>
+                    <div class="card-desc">Mécanismes réactionnels, fonctions chimiques et stéréochimie.</div>
+                    <div class="card-price">4 000 F CFA</div>
+                    <button class="btn-action btn-buy" onclick="acheter('Chimie Organique', '4 000 F CFA')">Acheter l'accès</button>
+                    <button class="btn-action btn-admin-edit" onclick="editerUe('ue-chimiorg')">⚙️ Gérer l'UE (Admin)</button>
                 </div>
             </div>
-
-            <div class="product-card">
-                <div>
-                    <div style="font-size: 30px;">🌿</div>
-                    <div class="product-title">Botanique Médicale</div>
-                    <p style="font-size: 13px; color: var(--text-muted);">Classification des plantes médicinales et QCM d'entraînement.</p>
+            <div class="card" id="ue-divcell">
+                <img class="card-img" src="https://images.unsplash.com/photo-1576086213369-97a306d36557?auto=format&fit=crop&w=400&q=80" alt="Division Cellulaire">
+                <div class="card-body">
+                    <div class="card-title">Division Cellulaire</div>
+                    <div class="card-desc">Processus complets de la mitose et de la méiose en détails.</div>
+                    <div class="card-price">3 500 F CFA</div>
+                    <button class="btn-action btn-buy" onclick="acheter('Division Cellulaire', '3 500 F CFA')">Acheter l'accès</button>
+                    <button class="btn-action btn-admin-edit" onclick="editerUe('ue-divcell')">⚙️ Gérer l'UE (Admin)</button>
                 </div>
-                <div>
-                    <div class="product-price">3 000 F CFA</div>
-                    <button class="btn-buy" onclick="ouvrirPaiement('Botanique', '3 000 F CFA')">Acheter / S'abonner</button>
+            </div>
+            <div class="card" id="ue-thermo">
+                <img class="card-img" src="https://images.unsplash.com/photo-1507668077129-56e32842fceb?auto=format&fit=crop&w=400&q=80" alt="Thermodynamique">
+                <div class="card-body">
+                    <div class="card-title">Thermodynamique</div>
+                    <div class="card-desc">Lois thermiques, transferts d'énergie et systèmes biochimiques.</div>
+                    <div class="card-price">4 000 F CFA</div>
+                    <button class="btn-action btn-buy" onclick="acheter('Thermodynamique', '4 000 F CFA')">Acheter l'accès</button>
+                    <button class="btn-action btn-admin-edit" onclick="editerUe('ue-thermo')">⚙️ Gérer l'UE (Admin)</button>
+                </div>
+            </div>
+            <div class="card" id="ue-electro">
+                <img class="card-img" src="https://images.unsplash.com/photo-1451187580459-43490279c0fa?auto=format&fit=crop&w=400&q=80" alt="Électrostatique">
+                <div class="card-body">
+                    <div class="card-title">Électrostatique & Cinétique</div>
+                    <div class="card-desc">Champs électriques, potentiels et dynamiques des charges.</div>
+                    <div class="card-price">4 000 F CFA</div>
+                    <button class="btn-action btn-buy" onclick="acheter('Électrostatique & Cinétique', '4 000 F CFA')">Acheter l'accès</button>
+                    <button class="btn-action btn-admin-edit" onclick="editerUe('ue-electro')">⚙️ Gérer l'UE (Admin)</button>
+                </div>
+            </div>
+            <div class="card" id="ue-equil">
+                <img class="card-img" src="https://images.unsplash.com/photo-1516321318423-f06f85e504b3?auto=format&fit=crop&w=400&q=80" alt="Équilibres Chimiques">
+                <div class="card-body">
+                    <div class="card-title">Équilibres Chimiques</div>
+                    <div class="card-desc">Équilibres acido-basiques, pH, solutions tampons et précipitation.</div>
+                    <div class="card-price">4 000 F CFA</div>
+                    <button class="btn-action btn-buy" onclick="acheter('Équilibres Chimiques', '4 000 F CFA')">Acheter l'accès</button>
+                    <button class="btn-action btn-admin-edit" onclick="editerUe('ue-equil')">⚙️ Gérer l'UE (Admin)</button>
+                </div>
+            </div>
+            <div class="card" id="ue-texte">
+                <img class="card-img" src="https://images.unsplash.com/photo-1586281380349-632531db7ed4?auto=format&fit=crop&w=400&q=80" alt="Traitement de texte">
+                <div class="card-body">
+                    <div class="card-title">Traitement de texte</div>
+                    <div class="card-desc">Outils informatiques et mise en page de rapports médicaux pros.</div>
+                    <div class="card-price">2 500 F CFA</div>
+                    <button class="btn-action btn-buy" onclick="acheter('Traitement de texte', '2 500 F CFA')">Acheter l'accès</button>
+                    <button class="btn-action btn-admin-edit" onclick="editerUe('ue-texte')">⚙️ Gérer l'UE (Admin)</button>
+                </div>
+            </div>
+            <div class="card" id="ue-maths">
+                <img class="card-img" src="https://images.unsplash.com/photo-1635070041078-e363dbe005cb?auto=format&fit=crop&w=400&q=80" alt="Maths Stats">
+                <div class="card-body">
+                    <div class="card-title">Mathématiques & Stats</div>
+                    <div class="card-desc">Probabilités, statistiques médicales et calculs de doses.</div>
+                    <div class="card-price">3 500 F CFA</div>
+                    <button class="btn-action btn-buy" onclick="acheter('Mathématiques & Stats', '3 500 F CFA')">Acheter l'accès</button>
+                    <button class="btn-action btn-admin-edit" onclick="editerUe('ue-maths')">⚙️ Gérer l'UE (Admin)</button>
+                </div>
+            </div>
+            <div class="card" id="ue-mecanique">
+                <img class="card-img" src="https://images.unsplash.com/photo-1532094349884-543bc11b234d?auto=format&fit=crop&w=400&q=80" alt="Mécanique Optique">
+                <div class="card-body">
+                    <div class="card-title">Mécanique / Radioactivité / Optique</div>
+                    <div class="card-desc">Bases de physique nucléaire, imagerie et mécanique des fluides corporels.</div>
+                    <div class="card-price">4 500 F CFA</div>
+                    <button class="btn-action btn-buy" onclick="acheter('Mécanique / Radioactivité / Optique', '4 500 F CFA')">Acheter l'accès</button>
+                    <button class="btn-action btn-admin-edit" onclick="editerUe('ue-mecanique')">⚙️ Gérer l'UE (Admin)</button>
                 </div>
             </div>
         </div>
-    </div>
 
-    <div class="payment-overlay" id="paymentOverlay">
-        <div class="payment-box">
-            <h3 id="payTitle" style="margin-bottom: 5px;">Matière</h3>
-            <div id="payPrice" style="color: var(--accent-cyan); font-weight: bold; margin-bottom: 20px;">0 F</div>
-
-            <div class="payment-option" onclick="choisirMode('paypal')">💳 PayPal (Euro / Dollar)</div>
-            <div class="payment-option" onclick="choisirMode('mobile')">📱 TMoney / Orange Money (Afrique)</div>
-
-            <div class="instructions" id="infoMobile">
-                <p style="margin-bottom: 10px;">Veuillez effectuer le transfert au numéro de l'administration.</p>
-                <p>Après le transfert, cliquez ci-dessous pour envoyer votre reçu sur WhatsApp afin de recevoir vos accès instantanément :</p>
-                <a href="#" id="waLink" class="btn-whatsapp" target="_blank">📲 Envoyer mon reçu sur WhatsApp</a>
+        <h2 class="semester-title">🌧️ Semestre Mousson</h2>
+        <div class="grid" id="gridMousson">
+            <div class="card" id="ue-anatomie">
+                <img class="card-img" src="https://images.unsplash.com/photo-1559757175-5700dde675bc?auto=format&fit=crop&w=400&q=80" alt="Anatomie">
+                <div class="card-body">
+                    <div class="card-title">Anatomie Humaine</div>
+                    <div class="card-desc">Ostéologie, myologie et organisation structurelle des systèmes.</div>
+                    <div class="card-price">5 000 F CFA</div>
+                    <button class="btn-action btn-buy" onclick="acheter('Anatomie Humaine', '5 000 F CFA')">Acheter l'accès</button>
+                    <button class="btn-action btn-admin-edit" onclick="editerUe('ue-anatomie')">⚙️ Gérer l'UE (Admin)</button>
+                </div>
             </div>
-
-            <div class="instructions" id="infoPaypal">
-                <p>Paiement sécurisé par PayPal disponible.</p>
-                <p style="margin-top: 10px; color: var(--accent-cyan);">[Le module PayPal s'ouvrira après liaison de votre carte]</p>
+            <div class="card" id="ue-biochmet">
+                <img class="card-img" src="https://images.unsplash.com/photo-1511193311914-0346f16efe90?auto=format&fit=crop&w=400&q=80" alt="Biochimie Métabolique">
+                <div class="card-body">
+                    <div class="card-title">Biochimie Métabolique</div>
+                    <div class="card-desc">Cycles énergétiques cellulaires, ATP, métabolisme des sucres et lipides.</div>
+                    <div class="card-price">4 500 F CFA</div>
+                    <button class="btn-action btn-buy" onclick="acheter('Biochimie Métabolique', '4 500 F CFA')">Acheter l'accès</button>
+                    <button class="btn-action btn-admin-edit" onclick="editerUe('ue-biochmet')">⚙️ Gérer l'UE (Admin)</button>
+                </div>
             </div>
-
-            <button class="btn-cancel" onclick="fermerPaiement()">Annuler et fermer</button>
-        </div>
-    </div>
-
-    <footer>
-        <p>&copy; 2026 Science Plus - Plateforme académique sécurisée. Tous droits réservés.</p>
-    </footer>
-
-    <script>
-        // Gestion du compte à rebours de la publicité
-        let tempsRestant = 5;
-        const timerElement = document.getElementById('pubTimer');
-        const boutonFermer = document.getElementById('btnClosePub');
-
-        const compteARebours = setInterval(() => {
-            tempsRestant--;
-            if (tempsRestant > 0) {
-                timerElement.innerText = "Veuillez patienter " + tempsRestant + " secondes...";
-            } else {
-                clearInterval(compteARebours);
-                timerElement.innerText = "Publicité visionnée !";
-                boutonFermer.disabled = false;
-                boutonFermer.classList.add('active');
-                boutonFermer.style.cursor = "pointer";
-            }
-        }, 1000);
-
-        function fermerPub() {
-            document.getElementById('pubOverlay').style.display = 'none';
-        }
-
-        // Gestion de la fenêtre de paiement
-        let matiereSelectionnee = "";
-        let prixSelectionne = "";
-
-        function ouvrirPaiement(nom, prix) {
-            matiereSelectionnee = nom;
-            prixSelectionne = prix;
-            document.getElementById('payTitle').innerText = "Achat : " + nom;
-            document.getElementById('payPrice').innerText = prix;
-            document.getElementById('paymentOverlay').style.display = 'flex';
-            document.getElementById('infoMobile').style.display = 'none';
-            document.getElementById('infoPaypal').style.display = 'none';
-        }
-
-        function fermerPaiement() {
-            document.getElementById('paymentOverlay').style.display = 'none';
-        }
-
-        function choisirMode(mode) {
-            document.getElementById('infoMobile').style.display = 'none';
-            document.getElementById('infoPaypal').style.display = 'none';
-
-            if(mode === 'mobile') {
-                document.getElementById('infoMobile').style.display = 'block';
-                // Configuration du lien WhatsApp automatique
-                let message = encodeURIComponent("Bonjour Science Plus, je souhaite valider mon accès pour la matière : " + matiereSelectionnee + " (" + prixSelectionne + "). Voici mon reçu de transfert Mobile Money :");
-                document.getElementById('waLink').href = "https://wa.me/22890000000?text=" + message; // Remplacer 22890000000 par ton vrai numéro plus tard
-            } else if(mode === 'paypal') {
-                document.getElementById('infoPaypal').style.display = 'block';
-            }
-        }
-
-        // Sécurités de base contre la copie
-        document.addEventListener('contextmenu', e => e.preventDefault());
-        document.addEventListener('keydown', e => {
-            if (e.ctrlKey && (e.key === 'c' || e.key === 's')) e.preventDefault();
-        });
-    </script>
-</body>
-      </html>
-  
+            <div class="card" id="ue-biochstruc">
+                <img class="card-img" src="https://images.unsplash.com/photo-1530026405186-ed1ea0ac7a63?auto=format&fit=crop&w=400&q=80" alt="Biochimie Structurale">
+                <div class="card-body">
+                    <div class="card-title">Biochimie Structurale</div>
+                    <div class="card-desc">Étude moléculaire des protéines, glucides, lipides et acides nucléiques.</div>
+                    <div class="card-price">4 500 F CFA</div>
+                    <button class="btn-action btn-buy" onclick="acheter('Biochimie Structurale', '4 500 F CFA')">Acheter l'accès</button>
+                    <button class="btn-action btn-admin-edit" onclick="editerUe('ue-biochstruc')">⚙️ Gérer l'UE (Admin)</button>
+                </div>
+            </div>
+            <div class="card" id="ue-botanique">
+                <img class="card-img" src="https://images.unsplash.com/photo-1463936575829-25148e1db1b8?auto=format&fit=crop&w=400&q=80" alt="Botanique">
+                <div class="card-body">
+                    <div class="card-title">Botanique Médicale</div>
+                    <div class="card-desc">Phytothérapie, plantes toxiques et classifications médicinales.</div>
+                    <div class="card-price">3 500 F CFA</div>
+                    <button class="btn-action btn-buy" onclick="acheter('Botanique Médicale', '3 500 F CFA')">Acheter l'accès</button>
+                    <button class="btn-action btn-admin-edit" onclick="editerUe('ue-botanique')">⚙️ Gérer l'UE (Admin)</button>
+                </div>
+            </div>
+            <div class="card" id="ue-genetique">
+                <img class="card-img" src="https://images.unsplash.com/photo-1628863012283-709ffae6f1fc?auto=format&fit=crop&w=400&q=80" alt="Génétique">
+                <div class="card-body">
+                    <div class="card-title">Génétique</div>
+                    <div class="card-desc">Hérédité mendélienne, mutations génique
