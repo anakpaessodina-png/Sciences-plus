@@ -3,198 +3,397 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Science Plus - Librairie Scientifique & Médicale</title>
+    <title>Science Plus - Portail Universitaire Privé</title>
     <style>
         :root {
-            --primary: #00b4d8;
-            --dark: #111827;
-            --light: #f9fafb;
-            --card-bg: #ffffff;
-            --text: #374151;
+            --primary: #0284c7;
+            --primary-dark: #0369a1;
+            --bg-body: #f8fafc;
+            --bg-card: #ffffff;
+            --text-main: #0f172a;
+            --text-muted: #64748b;
         }
-        
+
         * {
+            box-sizing: border-box;
             margin: 0;
             padding: 0;
-            box-sizing: border-box;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            font-family: system-ui, -apple-system, sans-serif;
         }
 
         body {
-            background-color: var(--light);
-            color: var(--text);
-            line-height: 1.6;
+            background-color: var(--bg-body);
+            color: var(--text-main);
         }
 
-        header {
-            background-color: var(--dark);
+        /* PORTAIL DE VERROUILLAGE SÉCURISÉ */
+        .login-overlay {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: #0f172a;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+            padding: 20px;
+        }
+
+        .login-box {
+            background: var(--bg-card);
+            padding: 25px;
+            border-radius: 16px;
+            width: 100%;
+            max-width: 420px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.3);
+            text-align: center;
+        }
+
+        .login-box h2 {
+            color: var(--primary);
+            margin-bottom: 6px;
+            font-size: 24px;
+        }
+
+        .login-box p {
+            color: var(--text-muted);
+            font-size: 13px;
+            margin-bottom: 20px;
+        }
+
+        .form-group {
+            margin-bottom: 14px;
+            text-align: left;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+            font-size: 13px;
+            font-weight: 600;
+            color: var(--text-main);
+        }
+
+        .form-group input, .form-group select {
+            width: 100%;
+            padding: 11px;
+            border: 1px solid #cbd5e1;
+            border-radius: 8px;
+            font-size: 14px;
+            background: #f1f5f9;
+            color: #000000;
+        }
+
+        .btn-login {
+            width: 100%;
+            background: var(--primary);
             color: white;
-            text-align: center;
-            padding: 2rem 1rem;
-            border-bottom: 4px solid var(--primary);
-        }
-
-        header h1 {
-            font-size: 2.2rem;
-            margin-bottom: 0.5rem;
-            letter-spacing: 1px;
-        }
-
-        header p {
-            color: #9ca3af;
-            font-size: 1rem;
-        }
-
-        .container {
-            max-width: 600px;
-            margin: 2rem auto;
-            padding: 0 1rem;
-        }
-
-        .welcome-box {
-            background: white;
-            padding: 1.5rem;
-            border-radius: 12px;
-            box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1);
-            text-align: center;
-            margin-bottom: 2rem;
-            border-left: 5px solid var(--primary);
-        }
-
-        .welcome-box h3 {
-            margin-bottom: 0.5rem;
-            color: var(--dark);
-        }
-
-        h2 {
-            font-size: 1.4rem;
-            color: var(--dark);
-            margin-bottom: 1rem;
-            position: relative;
-        }
-
-        .product-card {
-            background: var(--card-bg);
-            border-radius: 12px;
-            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
-            margin-bottom: 1.5rem;
-            overflow: hidden;
-            border: 1px solid #e5e7eb;
-        }
-
-        .product-info {
-            padding: 1.5rem;
-        }
-
-        .badge {
-            background-color: #e0f2fe;
-            color: #0369a1;
-            padding: 0.25rem 0.75rem;
-            border-radius: 50px;
-            font-size: 0.8rem;
+            border: none;
+            padding: 12px;
+            border-radius: 8px;
+            font-size: 15px;
             font-weight: bold;
-            display: inline-block;
-            margin-bottom: 0.5rem;
+            cursor: pointer;
+            margin-top: 5px;
         }
 
-        .product-info h4 {
-            font-size: 1.2rem;
-            color: var(--dark);
-            margin-bottom: 0.5rem;
+        .btn-bypass {
+            width: 100%;
+            background: #f97316;
+            color: white;
+            border: none;
+            padding: 10px;
+            border-radius: 8px;
+            font-size: 14px;
+            font-weight: bold;
+            cursor: pointer;
+            margin-top: 10px;
         }
 
-        .product-info p {
-            font-size: 0.95rem;
-            color: #4b5563;
-            margin-bottom: 1rem;
-        }
-
-        .price-row {
+        /* APPARENCE DU SITE PRINCIPAL */
+        header {
+            background: var(--primary);
+            color: white;
+            padding: 15px 5%;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            border-top: 1px solid #f3f4f6;
-            padding-top: 1rem;
+            position: sticky;
+            top: 0; z-index: 100;
         }
 
-        .price {
-            font-size: 1.3rem;
+        .logo { font-size: 20px; font-weight: 800; }
+        .user-badge { font-size: 13px; background: rgba(255,255,255,0.2); padding: 5px 10px; border-radius: 20px; }
+
+        .container { max-width: 1200px; margin: 0 auto; padding: 20px 5%; }
+        
+        .semester-title {
+            margin: 30px 0 15px;
+            padding-bottom: 6px;
+            border-bottom: 3px solid var(--primary);
+            color: var(--primary-dark);
+            font-size: 20px;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+            gap: 20px;
+        }
+
+        .card {
+            background: var(--bg-card);
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+            border: 1px solid #e2e8f0;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .card-img {
+            width: 100%;
+            height: 140px;
+            object-fit: cover;
+        }
+
+        .card-body { padding: 15px; }
+        .card-title { font-size: 17px; font-weight: 700; margin-bottom: 6px; }
+        .card-desc { font-size: 12px; color: var(--text-muted); margin-bottom: 12px; min-height: 34px; }
+        .card-price { font-size: 16px; font-weight: 800; color: var(--primary); margin-bottom: 12px; }
+
+        .btn-action {
+            width: 100%;
+            padding: 10px;
+            border-radius: 6px;
+            border: none;
             font-weight: bold;
-            color: var(--dark);
-        }
-
-        .btn-order {
-            background-color: var(--primary);
-            color: white;
-            text-decoration: none;
-            padding: 0.6rem 1.2rem;
-            border-radius: 8px;
-            font-size: 0.9rem;
-            font-weight: bold;
-            transition: background 0.2s;
-        }
-
-        .btn-order:hover {
-            background-color: #0077b6;
-        }
-
-        footer {
+            cursor: pointer;
             text-align: center;
-            padding: 2rem 1rem;
-            color: #9ca3af;
-            font-size: 0.85rem;
-            margin-top: 3rem;
-            border-top: 1px solid #e5e7eb;
+            text-decoration: none;
+            display: block;
+        }
+
+        .btn-buy { background: #0284c7; color: white; font-size: 14px; }
+        .btn-admin-edit { background: #e2e8f0; color: #334155; margin-top: 8px; font-size: 11px; display: none; }
+
+        footer { text-align: center; padding: 30px; margin-top: 20px; background: #e2e8f0; }
+        .btn-admin-trigger { background: transparent; border: none; color: var(--text-muted); cursor: pointer; font-size: 12px; }
+
+        .admin-panel {
+            position: fixed;
+            bottom: 0; left: 0; width: 100%;
+            background: white;
+            box-shadow: 0 -10px 25px rgba(0,0,0,0.2);
+            padding: 15px;
+            display: none;
+            z-index: 5000;
         }
     </style>
 </head>
 <body>
 
+    <div class="login-overlay" id="loginOverlay">
+        <div class="login-box">
+            <h2>🧬 Science Plus</h2>
+            <p>Portail d'études supérieures en Médecine & Sciences</p>
+            
+            <div class="form-group">
+                <label>Votre Prénom *</label>
+                <input type="text" id="studentPre" placeholder="Ex: Jean">
+            </div>
+            <div class="form-group">
+                <label>Votre Nom (Facultatif)</label>
+                <input type="text" id="studentNom" placeholder="Ex: Kodjo">
+            </div>
+            <div class="form-group">
+                <label>Votre Université *</label>
+                <select id="studentUniv" onchange="checkOtherUniv()">
+                    <option value="Université de Lomé">Université de Lomé</option>
+                    <option value="Université de Kara">Université de Kara</option>
+                    <option value="Université d'Abomey-Calavi">Université d'Abomey-Calavi (Bénin)</option>
+                    <option value="Université de Parakou">Université de Parakou</option>
+                    <option value="Université Joseph Ki-Zerbo">Université Joseph Ki-Zerbo (Burkina)</option>
+                    <option value="UCAD (Sénégal)">Université Cheikh Anta Diop (UCAD)</option>
+                    <option value="Université Abdou Moumouni">Université Abdou Moumouni (Niger)</option>
+                    <option value="Autre">Autre Établissement</option>
+                </select>
+            </div>
+            <div class="form-group" id="otherUnivGroup" style="display: none;">
+                <label>Nom de l'université</label>
+                <input type="text" id="studentOtherUniv" placeholder="Saisissez votre établissement">
+            </div>
+
+            <button class="btn-login" onclick="validerFormulaireDirect()">Accéder au portail d'études</button>
+            <button class="btn-bypass" onclick="entrerEnInvite()">⚡ Entrée Rapide Invité</button>
+        </div>
+    </div>
+
     <header>
-        <h1>Science Plus</h1>
-        <p>Votre plateforme de documents scientifiques et médicaux</p>
+        <div class="logo">🧬 Science Plus</div>
+        <div class="user-badge" id="userBadge">Étudiant</div>
     </header>
 
     <div class="container">
+        <h2 class="semester-title">🍂 Semestre Harmattan</h2>
+        <div class="grid">
+            <div class="card" id="ue-biocell">
+                <img class="card-img" src="https://images.unsplash.com/photo-1532187863486-abf9d39d6618?auto=format&fit=crop&w=400&q=80" alt="Bio">
+                <div class="card-body">
+                    <div class="card-title">Biologie Cellulaire</div>
+                    <div class="card-desc">Structure, organelles et fonctionnement intime de la cellule humaine.</div>
+                    <div class="card-price">4 000 F CFA</div>
+                    <button class="btn-action btn-buy" onclick="acheter('Biologie Cellulaire', '4 000 F CFA')">Acheter l'accès</button>
+                    <button class="btn-action btn-admin-edit" onclick="editerUe('ue-biocell')">⚙️ Gérer (Admin)</button>
+                </div>
+            </div>
+            <div class="card" id="ue-biophys">
+                <img class="card-img" src="https://images.unsplash.com/photo-1614064641938-3bbee52942c7?auto=format&fit=crop&w=400&q=80" alt="Phys">
+                <div class="card-body">
+                    <div class="card-title">Biophysique</div>
+                    <div class="card-desc">Rayonnements, solutions aqueuses et applications médicales directes.</div>
+                    <div class="card-price">4 000 F CFA</div>
+                    <button class="btn-action btn-buy" onclick="acheter('Biophysique', '4 000 F CFA')">Acheter l'accès</button>
+                    <button class="btn-action btn-admin-edit" onclick="editerUe('ue-biophys')">⚙️ Gérer (Admin)</button>
+                </div>
+            </div>
+            <div class="card" id="ue-chimiorg">
+                <img class="card-img" src="https://images.unsplash.com/photo-1603126857599-f6e157fa2fe6?auto=format&fit=crop&w=400&q=80" alt="Chimie">
+                <div class="card-body">
+                    <div class="card-title">Chimie Organique</div>
+                    <div class="card-desc">Mécanismes réactionnels, fonctions chimiques et stéréochimie.</div>
+                    <div class="card-price">4 000 F CFA</div>
+                    <button class="btn-action btn-buy" onclick="acheter('Chimie Organique', '4 000 F CFA')">Acheter l'accès</button>
+                    <button class="btn-action btn-admin-edit" onclick="editerUe('ue-chimiorg')">⚙️ Gérer (Admin)</button>
+                </div>
+            </div>
+            <div class="card" id="ue-divcell">
+                <img class="card-img" src="https://images.unsplash.com/photo-1576086213369-97a306d36557?auto=format&fit=crop&w=400&q=80" alt="Cellule">
+                <div class="card-body">
+                    <div class="card-title">Division Cellulaire</div>
+                    <div class="card-desc">Processus complets de la mitose et de la méiose en détails.</div>
+                    <div class="card-price">3 500 F CFA</div>
+                    <button class="btn-action btn-buy" onclick="acheter('Division Cellulaire', '3 500 F CFA')">Acheter l'accès</button>
+                    <button class="btn-action btn-admin-edit" onclick="editerUe('ue-divcell')">⚙️ Gérer (Admin)</button>
+                </div>
+            </div>
+            <div class="card" id="ue-thermo">
+                <img class="card-img" src="https://images.unsplash.com/photo-1507668077129-56e32842fceb?auto=format&fit=crop&w=400&q=80" alt="Thermo">
+                <div class="card-body">
+                    <div class="card-title">Thermodynamique</div>
+                    <div class="card-desc">Lois thermiques, transferts d'énergie et systèmes biochimiques.</div>
+                    <div class="card-price">4 000 F CFA</div>
+                    <button class="btn-action btn-buy" onclick="acheter('Thermodynamique', '4 000 F CFA')">Acheter l'accès</button>
+                    <button class="btn-action btn-admin-edit" onclick="editerUe('ue-thermo')">⚙️ Gérer (Admin)</button>
+                </div>
+            </div>
+            <div class="card" id="ue-electro">
+                <img class="card-img" src="https://images.unsplash.com/photo-1451187580459-43490279c0fa?auto=format&fit=crop&w=400&q=80" alt="Elec">
+                <div class="card-body">
+                    <div class="card-title">Électrostatique & Cinétique</div>
+                    <div class="card-desc">Champs électriques, potentiels et dynamiques des charges.</div>
+                    <div class="card-price">4 000 F CFA</div>
+                    <button class="btn-action btn-buy" onclick="acheter('Électrostatique & Cinétique', '4 000 F CFA')">Acheter l'accès</button>
+                    <button class="btn-action btn-admin-edit" onclick="editerUe('ue-electro')">⚙️ Gérer (Admin)</button>
+                </div>
+            </div>
+            <div class="card" id="ue-equil">
+                <img class="card-img" src="https://images.unsplash.com/photo-1516321318423-f06f85e504b3?auto=format&fit=crop&w=400&q=80" alt="Equilibre">
+                <div class="card-body">
+                    <div class="card-title">Équilibres Chimiques</div>
+                    <div class="card-desc">Équilibres acido-basiques, pH, solutions tampons et précipitation.</div>
+                    <div class="card-price">4 000 F CFA</div>
+                    <button class="btn-action btn-buy" onclick="acheter('Équilibres Chimiques', '4 000 F CFA')">Acheter l'accès</button>
+                    <button class="btn-action btn-admin-edit" onclick="editerUe('ue-equil')">⚙️ Gérer (Admin)</button>
+                </div>
+            </div>
+            <div class="card" id="ue-texte">
+                <img class="card-img" src="https://images.unsplash.com/photo-1586281380349-632531db7ed4?auto=format&fit=crop&w=400&q=80" alt="Texte">
+                <div class="card-body">
+                    <div class="card-title">Traitement de texte</div>
+                    <div class="card-desc">Outils informatiques et mise en page de rapports médicaux pros.</div>
+                    <div class="card-price">2 500 F CFA</div>
+                    <button class="btn-action btn-buy" onclick="acheter('Traitement de texte', '2 500 F CFA')">Acheter l'accès</button>
+                    <button class="btn-action btn-admin-edit" onclick="editerUe('ue-texte')">⚙️ Gérer (Admin)</button>
+                </div>
+            </div>
+            <div class="card" id="ue-maths">
+                <img class="card-img" src="https://images.unsplash.com/photo-1635070041078-e363dbe005cb?auto=format&fit=crop&w=400&q=80" alt="Maths">
+                <div class="card-body">
+                    <div class="card-title">Mathématiques & Stats</div>
+                    <div class="card-desc">Probabilités, statistiques médicales et calculs de doses.</div>
+                    <div class="card-price">3 500 F CFA</div>
+                    <button class="btn-action btn-buy" onclick="acheter('Mathématiques & Stats', '3 500 F CFA')">Acheter l'accès</button>
+                    <button class="btn-action btn-admin-edit" onclick="editerUe('ue-maths')">⚙️ Gérer (Admin)</button>
+                </div>
+            </div>
+            <div class="card" id="ue-mecanique">
+                <img class="card-img" src="https://images.unsplash.com/photo-1532094349884-543bc11b234d?auto=format&fit=crop&w=400&q=80" alt="Physique">
+                <div class="card-body">
+                    <div class="card-title">Mécanique / Radioactivité / Optique</div>
+                    <div class="card-desc">Bases de physique nucléaire, imagerie et mécanique des fluides.</div>
+                    <div class="card-price">4 500 F CFA</div>
+                    <button class="btn-action btn-buy" onclick="acheter('Mécanique / Radioactivité / Optique', '4 500 F CFA')">Acheter l'accès</button>
+                    <button class="btn-action btn-admin-edit" onclick="editerUe('ue-mecanique')">⚙️ Gérer (Admin)</button>
+                </div>
+            </div>
+        </div>
+
+        <h2 class="semester-title">🌧️ Semestre Mousson</h2>
+        <div class="grid">
+            <div class="card" id="ue-anatomie">
+                <img class="card-img" src="https://images.unsplash.com/photo-1559757175-5700dde675bc?auto=format&fit=crop&w=400&q=80" alt="Anat">
+                <div class="card-body">
+                    <div class="card-title">Anatomie Humaine</div>
+                    <div class="card-desc">Ostéologie, myologie et organisation structurelle des systèmes.</div>
+                    <div class="card-price">5 000 F CFA</div>
+                    <button class="btn-action btn-buy" onclick="acheter('Anatomie Humaine', '5 000 F CFA')">Acheter l'accès</button>
+                    <button class="btn-action btn-admin-edit" onclick="editerUe('ue-anatomie')">⚙️ Gérer (Admin)</button>
+                </div>
+            </div>
+            <div class="card" id="ue-biochmet">
+                <img class="card-img" src="https://images.unsplash.com/photo-1511193311914-0346f16efe90?auto=format&fit=crop&w=400&q=80" alt="Bioch">
+                <div class="card-body">
+                    <div class="card-title">Biochimie Métabolique</div>
+                    <div class="card-desc">Cycles énergétiques cellulaires, ATP, métabolisme des sucres.</div>
+                    <div class="card-price">4 500 F CFA</div>
+                    <button class="btn-action btn-buy" onclick="acheter('Biochimie Métabolique', '4 500 F CFA')">Acheter l'accès</button>
+                    <button class="btn-action btn-admin-edit" onclick="editerUe('ue-biochmet')">⚙️ Gérer (Admin)</button>
+                </div>
+            </div>
+            <div class="card" id="ue-biochstruc">
+                <img class="card-img" src="https://images.unsplash.com/photo-1530026405186-ed1ea0ac7a63?auto=format&fit=crop&w=400&q=80" alt="Bioch S">
+                <div class="card-body">
+                    <div class="card-title">Biochimie Structurale</div>
+                    <div class="card-desc">Étude moléculaire des protéines, glucides, lipides et acides nucléiques.</div>
+                    <div class="card-price">4 500 F CFA</div>
+                    <button class="btn-action btn-buy" onclick="acheter('Biochimie Structurale', '4 500 F CFA')">Acheter l'accès</button>
+                    <button class="btn-action btn-admin-edit" onclick="editerUe('ue-biochstruc')">⚙️ Gérer (Admin)</button>
+                </div>
+            </div>
+            <div class="card" id="ue-botanique">
+                <img class="card-img" src="https://images.unsplash.com/photo-1463936575829-25148e1db1b8?auto=format&fit=crop&w=400&q=80" alt="Botanique">
+                <div class="card-body">
+                    <div class="card-title">Botanique Médicale</div>
+                    <div class="card-desc">Phytothérapie, plantes toxiques et classifications médicinales.</div>
+                    <div class="card-price">3 500 F CFA</div>
+                    <button class="btn-action btn-buy" onclick="acheter('Botanique Médicale', '3 500 F CFA')">Acheter l'accès</button>
+                    <button class="btn-action btn-admin-edit" onclick="editerUe('ue-botanique')">⚙️ Gérer (Admin)</button>
+                </div>
+            </div>
+            <div class="card" id="ue-genetique">
+                <img class="card-img" src="https://images.unsplash.com/photo-1628863012283-709ffae6f1fc?auto=format&fit=crop&w=400&q=80" alt="Gen">
+                <div class="card-body">
+                    <div class="card-title">Génétique</div>
+                    <div class="card-desc">Hérédité mendélienne, mutations géniques et pathologies.</div>
+                    <div class="card-price">4 000 F CFA</div>
+                    <button class="btn-action btn-buy" onclick="acheter('Génétique', '4 000 F CFA')">Acheter l'accès</button>
+                    <button class="btn-action btn-admin-edit" onclick="editerUe('ue-genetique')">⚙️ Gérer (Admin)</button>
+                </div>
+            </div>
+            <div class="card" id="ue-parasito">
+                <img class="card-img" src="https://images.unsplash.com/photo-1579154204601-01588f351e67?auto=format&fit=crop&w=400&q=80" alt="Parasito">
+                <div class="card-body">
+                    <div class="card-title">Parasitologie - Entomologie</div>
+                    <div
         
-        <div class="welcome-box">
-            <h3>Bienvenue sur notre boutique</h3>
-            <p>Retrouvez ici nos meilleurs résumés de cours et fiches de révision optimisés pour vos examens.</p>
-        </div>
-
-        <h2>📚 Nos Documents Disponibles</h2>
-
-        <!-- Produit 1 -->
-        <div class="product-card">
-            <div class="product-info">
-                <span class="badge">Médecine & Biologie</span>
-                <h4>Fiche de Révision : Parasitologie Médicale</h4>
-                <p>Un résumé complet, clair et structuré contenant l'essentiel à retenir pour réussir brillamment vos évaluations.</p>
-                <div class="price-row">
-                    <span class="price">2 000 F CFA</span>
-                    <a href="#" class="btn-order">Commander</a>
-                </div>
-            </div>
-        </div>
-
-        <!-- Produit 2 -->
-        <div class="product-card">
-            <div class="product-info">
-                <span class="badge">Botanique</span>
-                <h4>Fiche d'Étude : Biologie Végétale</h4>
-                <p>Synthèse illustrée reprenant toutes les notions clés du cours, idéale pour les révisions de dernière minute.</p>
-                <div class="price-row">
-                    <span class="price">1 500 F CFA</span>
-                    <a href="#" class="btn-order">Commander</a>
-                </div>
-            </div>
-        </div>
-
-    </div>
-
-    <footer>
-        <p>&copy; 2026 Science Plus. Tous droits réservés.</p>
-    </footer>
-
-</body>
-</html>
